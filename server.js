@@ -13,7 +13,6 @@ mongoose.set('useNewUrlParser',true);
 mongoose.set('useUnifiedTopology',true);
 mongoose.set('useFindAndModify',false);
 mongoose.set('useCreateIndex',true);
-mongoose.connect("mongodb+srv://fayeque123:fayeque123@devconnector-mxfos.mongodb.net/test?retryWrites=true&w=majority");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -31,6 +30,26 @@ app.use("/api",require("./routes/employeeSide"));
 // app.use("/api/posts",require("./routes/leave"));
 // app.use("/api/profile",require("./routes/api/profile"));
 
-app.listen(PORT,(req,res) =>{
-    console.log("server started at 5000");
-})
+// Making Build Folder as Public 
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
+const start = async () => {
+    try{
+    await mongoose.connect('mongodb://Fayeque:Fayeque123@cluster0-shard-00-00.71j4f.mongodb.net:27017,cluster0-shard-00-01.71j4f.mongodb.net:27017,cluster0-shard-00-02.71j4f.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority');
+    console.log("Connected to mongodb");
+    app.listen(PORT,(req,res) =>{
+        console.log("server started at 5000");
+    })
+}catch(err){
+        console.log(err);
+
+    }
+}
+
+
+start();

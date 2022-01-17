@@ -10,7 +10,7 @@ export const leaveRequest = (from,to,leaveType,remarks,days,history) => async di
     }
     const body = JSON.stringify({from,to,leaveType,remarks,days});
     try{
-    const res=await axios.post("http://localhost:5000/api/leaveRequest",body,config);
+    const res=await axios.post("/api/leaveRequest",body,config);
     dispatch(setAlert(res.data.success[0].msg,"success"));
     history.push("/employeeDashboard");
 }catch(err){
@@ -29,7 +29,7 @@ export const leaveRequest = (from,to,leaveType,remarks,days,history) => async di
 
 export const getLeave = (skip) => async dispatch => {
     try{
-        const res = await axios.get(`http://localhost:5000/api/getLeave?skip=${skip}`);
+        const res = await axios.get(`/api/getLeave?skip=${skip}`);
         dispatch({
             type:GET_LEAVE,
             payload:res.data

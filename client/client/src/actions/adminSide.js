@@ -6,7 +6,7 @@ import { setAlert } from "./alert";
 
 export const fetchEmp = (val) => async dispatch => {
     try{
-    const res=await axios.get(`http://localhost:5000/api/fetchEmp?name=${val}`);
+    const res=await axios.get(`/api/fetchEmp?name=${val}`);
     console.log(res.data);
     dispatch({
         type:FETCH_EMP_SUCCESS,
@@ -38,7 +38,7 @@ export const registerEmployee = (name,email,mobile,password,department,employeeI
     }
     const body = JSON.stringify({name,email,mobile,password,department,employeeID});
     try{
-    const res=await axios.post("http://localhost:5000/api/registerEmployee",body,config);
+    const res=await axios.post("/api/registerEmployee",body,config);
     console.log(res.data.success);
     dispatch({
         type:EMP_REG_SUCCESS,
@@ -66,7 +66,7 @@ export const registerEmployee = (name,email,mobile,password,department,employeeI
 
 export const getLeaveRequest = (skip) => async dispatch => {
     try{
-        const res = await axios.get(`http://localhost:5000/api/getLeaveRequest?skip=${skip}`);
+        const res = await axios.get(`/api/getLeaveRequest?skip=${skip}`);
         dispatch({
             type:GET_LEAVE_REQUEST,
             payload:res.data
@@ -88,7 +88,7 @@ export const getLeaveRequest = (skip) => async dispatch => {
 export const getLeaveDetail = (leave_id) => async dispatch => {
     try{
         console.log("leave idddd",leave_id);
-        const res = await axios.get(`http://localhost:5000/api/getLeaveDetail/${leave_id}`);
+        const res = await axios.get(`/api/getLeaveDetail/${leave_id}`);
         console.log("response from the server",res.data);
         dispatch({
             type:GET_LEAVE_DETAIL,
@@ -117,7 +117,7 @@ export const submitLeaveStatus = (adminremarks,status,history,leave_id,id) => as
             }
         }
         const body = JSON.stringify({adminremarks,status});
-        const res = await axios.post(`http://localhost:5000/api/submitLeaveStatus/${leave_id}/${id}`,body,config);
+        const res = await axios.post(`/api/submitLeaveStatus/${leave_id}/${id}`,body,config);
         console.log("response from the server",res.data);
         dispatch(setAlert(res.data.success[0].msg,"success"));
         history.push("/adminDashboard");
@@ -137,7 +137,7 @@ export const submitLeaveStatus = (adminremarks,status,history,leave_id,id) => as
 
 export const fetchLeaveDetail = () => async dispatch => {
     try{
-        const res = await axios.get(`http://localhost:5000/api/fetchLeaveHistory`);
+        const res = await axios.get(`/api/fetchLeaveHistory`);
         dispatch({
             type:FETCH_LEAVE_DETAIL,
             payload:res.data
